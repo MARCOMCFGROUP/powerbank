@@ -342,6 +342,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <div class="lang-toggle">
       <button class="lang-btn active" id="btnFR" onclick="setLang('fr')">FR</button>
       <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btnDE" onclick="setLang('de')">DE</button>
     </div>
   </div>
 
@@ -646,6 +647,10 @@ const translations = {
     "yes": "Oui", "no": "Non", "other": "Autre",
     "specify": "Préciser :",
     "print_btn": "Télécharger / Imprimer",
+    "footer.line1": "AQUALUX SAS — ZA de la Massane, 287 route de la Massane, 13210 Saint-Rémy-de-Provence, France",
+    "footer.line2": "email : bluehorizon@cf.group",
+    "footer.line3": "RCS 390 039 949 Tarascon — SAS capital 1 500 000 € — N° TVA FR32 390 039 949",
+    "footer.line4": "tél. : +33 (0) 9 70 72 5000",
     "s1.title": "Coordonnées du client",
     "s1.societe": "Société", "s1.societe_ph": "Raison sociale",
     "s1.adresse": "Adresse", "s1.adresse_ph": "3 rue…",
@@ -765,6 +770,71 @@ const translations = {
     "s6.title": "Remarks & observations",
     "s6.obs_label": "Additional observations",
     "s6.obs_ph": "Additional information, specific constraints, site access…"
+  },
+  de: {
+    "header.title": "Projektqualifizierungs-Fragebogen",
+    "header.subtitle": "Technische Analyse & Projektrahmen",
+    "yes": "Ja", "no": "Nein", "other": "Sonstige",
+    "specify": "Angeben:",
+    "print_btn": "Herunterladen / Drucken",
+    "footer.line1": "AQUALUX SAS — ZA de la Massane, 287 route de la Massane, 13210 Saint-Rémy-de-Provence, Frankreich",
+    "footer.line2": "E-Mail: bluehorizon@cf.group",
+    "footer.line3": "Handelsreg. 390 039 949 Tarascon — Stammkapital 1.500.000 € — USt-IdNr. FR32 390 039 949",
+    "footer.line4": "Tel.: +33 (0) 9 70 72 5000",
+    "s1.title": "Kundendaten",
+    "s1.societe": "Unternehmen", "s1.societe_ph": "Firmenname",
+    "s1.adresse": "Adresse", "s1.adresse_ph": "Musterstraße 3…",
+    "s1.interlocuteur": "Ansprechpartner", "s1.interlocuteur_ph": "Nachname, Vorname",
+    "s1.email": "E-Mail", "s1.email_ph": "adresse@beispiel.de",
+    "s1.tel_bureau": "Bürotelefon", "s1.tel_portable": "Mobiltelefon",
+    "s1.client_cf": "CF-Gruppe Kunde",
+    "s2.title": "Projektadresse & Bauleitung",
+    "s2.adresse_projet": "Projektadresse",
+    "s2.archi": "Architekt / Bauleitung",
+    "s2.nom_cabinet": "Name / Büro", "s2.nom_cabinet_ph": "Name oder Firmenname",
+    "s2.email_archi_ph": "architekt@beispiel.de",
+    "s3.title": "Projekteigenschaften",
+    "s3.nature": "Projektart",
+    "s3.renovation": "Renovierung", "s3.construction": "Neubau",
+    "s3.habitation": "Gebäude",
+    "s3.annee": "Baujahr",
+    "s3.surface_chauffee": "Beheizte Fläche",
+    "s3.isolation": "Wärmedämmung",
+    "s3.chauffage_hab": "Heizung / Klimaanlage",
+    "s3.plancher": "Fußbodenheizung", "s3.radiateur": "Heizkörper",
+    "s3.ventiloconv": "Ventilatorkonvektor", "s3.gainable": "Kanalanlage",
+    "s3.clim_hab": "Klimatisierung des Gebäudes",
+    "s3.surface_clim": "Gekühlte Fläche", "s3.volume_clim": "Gekühltes Volumen",
+    "s3.localisation": "Lage des Beckens",
+    "s3.interieur": "Innen", "s3.exterieur": "Außen",
+    "s3.dimensions": "Beckenabmessungen",
+    "s3.longueur": "Länge", "s3.largeur": "Breite", "s3.profondeur": "Tiefe",
+    "s3.debordement": "Bei Überlauf — Volumen",
+    "s3.plan": "Plan beigefügt",
+    "s3.diam_cana": "Rohrdurchmesser",
+    "s3.cana_ph": "Durchmesser in mm…",
+    "s3.chauffage_pisc": "Schwimmbadheizung",
+    "s3.pac": "Wärmepumpe", "s3.sans_chauffage": "Ohne Heizung",
+    "s3.couverture": "Schwimmbadabdeckung",
+    "s3.couv_interieur": "Innen", "s3.sous_abris": "Unter Überdachung",
+    "s3.volet": "Lamellen-Abdeckung", "s3.barres": "Stababdeckung",
+    "s4.title": "Technikraum — Wohngebäude",
+    "s4.porte_dim": "Zugangstür & Abmessungen",
+    "s4.haut_porte": "Türhöhe", "s4.larg_porte": "Türbreite",
+    "s4.surface": "Verfügbare Fläche", "s4.haut_plafond": "Raumhöhe",
+    "s4.distance_hab": "Abstand Wohnraum / Schwimmbad-Technikraum",
+    "s4.distance_label": "Abstand",
+    "s4.alim_elec": "Stromversorgung",
+    "s4.tension": "Spannung", "s4.frequence": "Frequenz",
+    "s4.connectivite": "Konnektivität",
+    "s4.gsm": "GSM-Empfang im Raum",
+    "s4.ethernet": "Ethernet-Anschluss im Raum",
+    "s4.point_eau": "Wasseranschluss",
+    "s5.title": "Technikraum — Schwimmbad",
+    "s5.altitude": "Höhe Technikraum / Becken",
+    "s6.title": "Bemerkungen & Hinweise",
+    "s6.obs_label": "Zusätzliche Anmerkungen",
+    "s6.obs_ph": "Weitere Informationen, spezifische Einschränkungen, Bauzugang…"
   }
 };
 
@@ -774,6 +844,7 @@ function setLang(lang) {
   currentLang = lang;
   document.getElementById('btnFR').classList.toggle('active', lang === 'fr');
   document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+  document.getElementById('btnDE').classList.toggle('active', lang === 'de');
   document.documentElement.lang = lang;
   const t = translations[lang];
   document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -784,7 +855,8 @@ function setLang(lang) {
     const key = el.getAttribute('data-i18n-ph');
     if (t[key] !== undefined) el.placeholder = t[key];
   });
-  document.title = lang === 'en' ? 'Project Qualification Questionnaire' : 'Questionnaire Powerbank';
+  const titles = { fr: 'Questionnaire Powerbank', en: 'Project Qualification Questionnaire', de: 'Projektqualifizierungs-Fragebogen' };
+  document.title = titles[lang] || titles.fr;
 }
 
 function selectRadio(el, groupId) {
