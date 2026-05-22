@@ -4,904 +4,754 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Questionnaire Powerbank</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="Logo.webp">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-:root {
-  --primary: #1A2E25;
-  --accent: #3CB288;
-  --accent-light: rgba(60,178,136,0.15);
-  --accent-glow: rgba(60,178,136,0.28);
-  --bg: #F2F7F5;
-  --text: #111111;
-  --muted: #4A6558;
-  --border: rgba(26,46,37,0.14);
-  --shadow: 0 8px 32px rgba(26,46,37,0.08);
-  --radius: 16px;
-  --radius-sm: 8px;
+:root{
+  --ink:#0D1B14;
+  --ink-2:#3A5244;
+  --ink-3:#6B8A7A;
+  --paper:#F6FAF8;
+  --paper-2:#EDF4F0;
+  --paper-3:#E0EDE7;
+  --green:#1A7A50;
+  --green-l:rgba(26,122,80,.12);
+  --green-g:rgba(26,122,80,.22);
+  --amber:#B45309;
+  --amber-l:rgba(180,83,9,.1);
+  --border:rgba(13,27,20,.1);
+  --border-2:rgba(13,27,20,.2);
+  --r:10px;
+  --r-lg:16px;
+  --shadow:0 2px 16px rgba(13,27,20,.07),0 0 0 1px var(--border);
 }
 
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);font-size:14px;line-height:1.6;min-height:100vh}
 
-.page-wrapper { max-width: 880px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+/* ── LAYOUT ── */
+.wrap{max-width:900px;margin:0 auto;padding:2rem 1.25rem 6rem}
 
-/* ── HEADER ── */
-.header {
-  background: var(--primary);
-  color: white;
-  padding: 1.75rem 2.5rem;
-  border-radius: var(--radius) var(--radius) 0 0;
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  flex-wrap: nowrap;
+/* ── TOP BAR ── */
+.topbar{
+  display:flex;align-items:stretch;gap:0;
+  background:var(--ink);border-radius:var(--r-lg) var(--r-lg) 0 0;
+  overflow:hidden;
 }
-
-.header-logo-img {
-  height: 42px;
-  object-fit: contain;
-  mix-blend-mode: screen;
-  flex-shrink: 0;
+.topbar-logo{
+  padding:1.4rem 1.75rem;
+  background:rgba(255,255,255,.04);
+  border-right:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;
 }
-
-.header-text {
-  flex: 1 1 0;
-  min-width: 0;
+.topbar-logo img{height:36px;object-fit:contain;mix-blend-mode:screen}
+.topbar-logo .logo-text{
+  font-size:18px;font-weight:600;color:#fff;letter-spacing:-.02em;
+  font-family:'Inter',sans-serif;
 }
+.topbar-info{flex:1;padding:1.4rem 1.75rem;display:flex;flex-direction:column;justify-content:center}
+.topbar-info h1{font-size:16px;font-weight:600;color:#fff;letter-spacing:-.01em;line-height:1.3}
+.topbar-info p{font-size:12px;color:rgba(255,255,255,.45);margin-top:2px;font-weight:400}
+.topbar-actions{padding:1.4rem 1.5rem;display:flex;align-items:center;gap:.75rem;border-left:1px solid rgba(255,255,255,.08)}
 
-/* FIX : allow wrapping so long titles are never clipped by the lang toggle */
-.header-text h1 {
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  white-space: normal;          /* was: nowrap — caused clipping */
-  overflow: visible;            /* was: hidden */
-  text-overflow: unset;         /* was: ellipsis */
-  word-break: break-word;
-  line-height: 1.3;
+/* lang toggle */
+.langs{display:flex;border:1px solid rgba(255,255,255,.18);border-radius:6px;overflow:hidden}
+.lang-btn{
+  font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;
+  padding:5px 11px;background:transparent;border:none;color:rgba(255,255,255,.4);cursor:pointer;
+  transition:background .15s,color .15s;
 }
-
-.header-text p {
-  font-size: 12.5px;
-  color: rgba(255,255,255,0.52);
-  margin-top: 2px;
-}
-
-.lang-toggle {
-  display: flex;
-  align-items: center;
-  border: 1.5px solid rgba(255,255,255,0.25);
-  border-radius: 20px;
-  overflow: hidden;
-  flex-shrink: 0;
-  align-self: flex-start;       /* pin to top so it doesn't stretch */
-}
-
-.lang-btn {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11.5px;
-  font-weight: 600;
-  padding: 5px 13px;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 0.5px;
-  transition: background 0.18s, color 0.18s;
-}
-
-.lang-btn.active {
-  background: var(--accent);
-  color: white;
-}
-
-.lang-btn:hover:not(.active) { color: rgba(255,255,255,0.9); }
+.lang-btn.on{background:var(--green);color:#fff}
+.lang-btn:hover:not(.on){color:rgba(255,255,255,.85)}
 
 /* ── PROGRESS ── */
-.progress-bar { height: 3px; background: #c8e2d8; }
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), #7ed4b4);
-  width: 0%;
-  transition: width 0.4s ease;
+.prog-track{height:3px;background:var(--paper-3)}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--green),#5ab98a);width:0%;transition:width .35s ease}
+
+/* ── FORM BODY ── */
+.form-body{
+  background:#fff;border-radius:0 0 var(--r-lg) var(--r-lg);
+  box-shadow:var(--shadow);padding:0 2.25rem 3rem;
 }
 
-/* ── FORM ── */
-.form-body {
-  background: white;
-  border-radius: 0 0 var(--radius) var(--radius);
-  box-shadow: var(--shadow);
-  padding: 0 2.5rem 3rem;
+/* ── SECTION ── */
+.sec{border-top:1px solid rgba(13,27,20,.06);padding-top:2.25rem;margin-top:.1rem}
+.sec:first-child{border-top:none}
+.sec-hd{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem}
+.sec-num{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--green);color:#fff;
+  font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
+.sec-hd h2{font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
 
-/* ── SECTIONS ── */
-.section {
-  padding: 2.5rem 0 0;
-  border-top: 1px solid rgba(26,46,37,0.07);
+/* ── SUBLABEL ── */
+.sub{
+  font-size:11.5px;font-weight:600;color:var(--ink);
+  margin:1.4rem 0 .65rem;padding-bottom:5px;
+  border-bottom:1px solid rgba(13,27,20,.07);
+  letter-spacing:.01em;
 }
-
-.section:first-child { border-top: none; padding-top: 2.5rem; }
-
-.section-title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 1.5rem;
-}
-
-.section-number {
-  background: var(--accent);
-  color: white;
-  width: 28px; height: 28px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 50%;
-  font-weight: 700;
-  font-size: 13px;
-  flex-shrink: 0;
-}
-
-.section-title h2 {
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--primary);
-}
+.sub.first{margin-top:0}
 
 /* ── GRIDS ── */
-.fg  { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1.5rem; margin-bottom: 0.9rem; }
-.fg.c1 { grid-template-columns: 1fr; }
-.g2  { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1.5rem; margin-bottom: 0.9rem; }
-.g3  { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.9rem 1.5rem; margin-bottom: 0.9rem; }
+.g1{display:grid;grid-template-columns:1fr;gap:.8rem .1rem;margin-bottom:.8rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem 1.25rem;margin-bottom:.8rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem 1.25rem;margin-bottom:.8rem}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.8rem 1.25rem;margin-bottom:.8rem}
 
-/* ── FIELDS ── */
-.field { display: flex; flex-direction: column; gap: 5px; }
-
-.field label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+/* ── FIELD ── */
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:10.5px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em}
+.field input,.field textarea{
+  border:1px solid var(--border);border-radius:var(--r);
+  padding:8px 11px;font-size:13px;background:var(--paper);
+  outline:none;font-family:'Inter',sans-serif;width:100%;color:var(--ink);
+  transition:border-color .15s,box-shadow .15s,background .15s;
 }
-
-.field input,
-.field textarea {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 9px 11px;
-  font-size: 13.5px;
-  background: #fafaf9;
-  outline: none;
-  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
-  font-family: 'DM Sans', sans-serif;
-  width: 100%;
-  color: var(--text);
+.field input:focus,.field textarea:focus{
+  border-color:var(--green);background:#fff;
+  box-shadow:0 0 0 3px var(--green-g);
 }
+.field input::placeholder,.field textarea::placeholder{color:rgba(107,138,122,.45)}
+.field textarea{resize:vertical}
 
-.field input:focus,
-.field textarea:focus {
-  border-color: var(--accent);
-  background: white;
-  box-shadow: 0 0 0 3px var(--accent-glow);
-}
-
-.field input::placeholder,
-.field textarea::placeholder { color: rgba(74,101,88,0.4); }
-.field textarea { resize: vertical; }
-
-/* ── UNIT INPUT ── */
-.fwu { display: flex; }
-.fwu input { border-radius: var(--radius-sm) 0 0 var(--radius-sm) !important; flex: 1; min-width: 0; }
-.fwu .unit {
-  border: 1px solid var(--border);
-  border-left: none;
-  padding: 9px 10px;
-  font-size: 11.5px;
-  background: #eef5f1;
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  white-space: nowrap;
-  font-family: 'DM Mono', monospace;
-  color: var(--muted);
-  display: flex;
-  align-items: center;
+/* unit input */
+.unit-wrap{display:flex}
+.unit-wrap input{border-radius:var(--r) 0 0 var(--r)!important;flex:1;min-width:0}
+.unit{
+  border:1px solid var(--border);border-left:none;
+  padding:8px 10px;font-size:11px;
+  background:var(--paper-2);border-radius:0 var(--r) var(--r) 0;
+  font-family:'JetBrains Mono',monospace;color:var(--ink-3);
+  display:flex;align-items:center;white-space:nowrap;
 }
 
 /* ── CHOICES ── */
-.choice-group { display: flex; flex-wrap: wrap; gap: 7px; }
-.choice-label { font-size: 12px; color: var(--muted); margin-bottom: 7px; display: block; }
+.choices{display:flex;flex-wrap:wrap;gap:6px}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px solid var(--border);border-radius:7px;
+  padding:6px 13px;font-size:12.5px;background:var(--paper);
+  cursor:pointer;user-select:none;color:var(--ink-2);
+  transition:border-color .13s,background .13s,color .13s;
+  line-height:1;
+}
+.chip:hover{border-color:var(--green);background:var(--green-l)}
+.chip.on{background:var(--green-l);border-color:var(--green);color:var(--ink);font-weight:500}
+.chip input{accent-color:var(--green);width:13px;height:13px;cursor:pointer;flex-shrink:0}
 
-.choice-item {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 7px 13px;
-  cursor: pointer;
-  font-size: 13px;
-  background: #fafaf9;
-  transition: border-color 0.15s, background 0.15s;
-  user-select: none;
+/* ── REVEAL (autre texte) ── */
+.reveal{display:none;margin-top:7px}
+.reveal.open{display:flex;align-items:flex-start;gap:8px}
+.reveal-lbl{font-size:11.5px;color:var(--ink-3);white-space:nowrap;padding-top:9px}
+.reveal input,.reveal textarea{
+  border:1px solid var(--border);border-radius:var(--r);
+  padding:7px 11px;font-size:13px;font-family:'Inter',sans-serif;
+  background:var(--paper);outline:none;color:var(--ink);flex:1;
+  max-width:380px;transition:border-color .15s,box-shadow .15s;
+}
+.reveal textarea{min-height:56px;resize:vertical;max-width:100%}
+.reveal input:focus,.reveal textarea:focus{
+  border-color:var(--green);background:#fff;
+  box-shadow:0 0 0 3px var(--green-g);
 }
 
-.choice-item:hover { border-color: var(--accent); background: var(--accent-light); }
-.choice-item.selected {
-  background: var(--accent-light);
-  border-color: var(--accent);
-  color: var(--primary);
-  font-weight: 500;
-}
-
-.choice-item input {
-  accent-color: var(--accent);
-  width: 14px; height: 14px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-/* ── SUBLABEL / DIVIDER ── */
-.sublabel {
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--primary);
-  margin: 1.4rem 0 0.6rem;
-  padding-bottom: 5px;
-  border-bottom: 1px solid rgba(26,46,37,0.07);
-}
-
-.divider { border: none; border-top: 1px dashed #b8d9cc; margin: 1.25rem 0; }
-
-/* ── INLINE OTHER ── */
-.inline-other { display: none; margin-top: 8px; align-items: center; gap: 8px; }
-.inline-other.visible { display: flex; }
-.inline-other span { font-size: 11.5px; color: var(--muted); white-space: nowrap; }
-.inline-other input {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 7px 11px;
-  font-size: 13px;
-  font-family: 'DM Sans', sans-serif;
-  background: #fafaf9;
-  outline: none;
-  width: 220px;
-  transition: border-color 0.18s, box-shadow 0.18s;
-  color: var(--text);
-}
-.inline-other input:focus {
-  border-color: var(--accent);
-  background: white;
-  box-shadow: 0 0 0 3px var(--accent-glow);
-}
+/* ── DIVIDER ── */
+hr{border:none;border-top:1px dashed var(--paper-3);margin:1.2rem 0}
 
 /* ── FLEX ROW ── */
-.flex-row { display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start; }
+.frow{display:flex;gap:2rem;flex-wrap:wrap;align-items:flex-start}
+
+/* ── INFO NOTE ── */
+.note{
+  background:var(--amber-l);border-left:3px solid var(--amber);
+  border-radius:0 var(--r) var(--r) 0;
+  padding:.6rem .9rem;font-size:12px;color:var(--amber);
+  margin:.5rem 0;
+}
 
 /* ── FOOTER ── */
-.footer {
-  margin-top: 3rem;
-  padding-top: 1.75rem;
-  border-top: 1px solid var(--border);
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
+.foot{
+  margin-top:2.5rem;padding-top:1.5rem;
+  border-top:1px solid var(--border);
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:1.5rem;flex-wrap:wrap;
 }
-
-.footer-lines { display: flex; flex-direction: column; gap: 3px; }
-.footer-line { font-size: 11px; color: var(--muted); line-height: 1.6; }
-
-.btn {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13.5px;
-  padding: 9px 20px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  border: 1px solid var(--border);
-  background: white;
-  color: var(--text);
-  transition: border-color 0.15s, background 0.15s;
-  flex-shrink: 0;
+.foot-info p{font-size:10.5px;color:var(--ink-3);line-height:1.8}
+.btn-print{
+  font-family:'Inter',sans-serif;font-size:13px;font-weight:600;
+  padding:9px 22px;border-radius:var(--r);
+  background:var(--green);color:#fff;border:none;cursor:pointer;
+  transition:opacity .15s;flex-shrink:0;
 }
-
-.btn:hover { border-color: var(--accent); background: var(--accent-light); }
-.btn-primary { background: var(--accent); color: white; border-color: transparent; font-weight: 600; }
-.btn-primary:hover { opacity: 0.88; background: var(--accent); }
+.btn-print:hover{opacity:.85}
 
 /* ── RESPONSIVE ── */
-@media (max-width: 620px) {
-  .fg, .g2, .g3 { grid-template-columns: 1fr !important; }
-  .page-wrapper { padding: 0.75rem 0.75rem 4rem; }
-  .form-body { padding: 0 1.25rem 2rem; }
-  .header { padding: 1.25rem; flex-wrap: wrap; }
-  .header-text { flex: 1 1 0; min-width: 0; }
-  .lang-toggle { flex-shrink: 0; }
-  .footer { flex-direction: column; align-items: flex-start; }
+@media(max-width:640px){
+  .g2,.g3,.g4{grid-template-columns:1fr!important}
+  .wrap{padding:.5rem .5rem 5rem}
+  .form-body{padding:0 1rem 2rem}
+  .topbar{flex-direction:column}
+  .topbar-actions{border-left:none;border-top:1px solid rgba(255,255,255,.08)}
+  .foot{flex-direction:column}
 }
-
-@media print {
-  body { background: white; }
-  .progress-bar, .btn { display: none !important; }
-  .page-wrapper { padding: 0; }
-  .form-body { box-shadow: none; }
+@media print{
+  .prog-track,.btn-print{display:none!important}
+  .wrap{padding:0}.form-body{box-shadow:none}
+  body{background:#fff}
 }
 </style>
 </head>
 <body>
-<div class="page-wrapper">
+<div class="wrap">
 
-  <!-- HEADER -->
-  <div class="header">
-    <img src="Logo Powerbank.png" class="header-logo-img" alt="Powerbank">
-    <div class="header-text">
-      <h1 data-i18n="header.title">Questionnaire de qualification projet</h1>
-      <p data-i18n="header.subtitle">Analyse &amp; cadrage technique</p>
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <img src="Logo Powerbank.png" alt="Powerbank" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <span class="logo-text" style="display:none">Powerbank</span>
+  </div>
+  <div class="topbar-info">
+    <h1 data-i18n="h.title">Questionnaire de qualification projet</h1>
+    <p data-i18n="h.sub">Analyse &amp; cadrage technique</p>
+  </div>
+  <div class="topbar-actions">
+    <div class="langs">
+      <button class="lang-btn on" id="bFR" onclick="L('fr')">FR</button>
+      <button class="lang-btn" id="bEN" onclick="L('en')">EN</button>
+      <button class="lang-btn" id="bDE" onclick="L('de')">DE</button>
     </div>
-    <div class="lang-toggle">
-      <button class="lang-btn active" id="btnFR" onclick="setLang('fr')">FR</button>
-      <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" id="btnDE" onclick="setLang('de')">DE</button>
+  </div>
+</div>
+
+<div class="prog-track"><div class="prog-fill" id="pFill"></div></div>
+
+<form class="form-body" id="F" onsubmit="return false">
+
+<!-- ══ 1 · COORDONNÉES ══ -->
+<div class="sec">
+  <div class="sec-hd"><div class="sec-num">1</div><h2 data-i18n="s1.t">Coordonnées du client</h2></div>
+
+  <div class="g1">
+    <div class="field"><label data-i18n="s1.soc">Société</label><input type="text" data-p="s1.soc_ph" placeholder="Raison sociale"></div>
+    <div class="field"><label data-i18n="s1.adr">Adresse</label><input type="text" data-p="s1.adr_ph" placeholder="3 rue…"></div>
+  </div>
+  <div class="g2">
+    <div class="field"><label data-i18n="s1.ref">Interlocuteur</label><input type="text" data-p="s1.ref_ph" placeholder="Nom, prénom"></div>
+    <div class="field"><label data-i18n="s1.mail">E-mail</label><input type="email" data-p="s1.mail_ph" placeholder="adresse@exemple.fr"></div>
+    <div class="field"><label data-i18n="s1.tel1">Tél. bureau</label><input type="tel" placeholder="+33 1 00 00 00 00"></div>
+    <div class="field"><label data-i18n="s1.tel2">Tél. portable</label><input type="tel" placeholder="+33 6 00 00 00 00"></div>
+  </div>
+
+  <div class="sub" data-i18n="s1.cf">Client CF group</div>
+  <div class="choices" id="cCF">
+    <label class="chip" onclick="R(this,'cCF')"><input type="radio" name="cf" value="oui"><span data-i18n="Y">Oui</span></label>
+    <label class="chip" onclick="R(this,'cCF')"><input type="radio" name="cf" value="non"><span data-i18n="N">Non</span></label>
+  </div>
+</div>
+
+<!-- ══ 2 · ADRESSE PROJET ══ -->
+<div class="sec">
+  <div class="sec-hd"><div class="sec-num">2</div><h2 data-i18n="s2.t">Adresse du projet &amp; Maître d'œuvre</h2></div>
+
+  <div class="g1">
+    <div class="field"><label data-i18n="s2.adr">Adresse du projet</label><input type="text" data-p="s1.adr_ph" placeholder="3 rue…"></div>
+  </div>
+
+  <div class="sub" data-i18n="s2.archi">Architecte / Maître d'œuvre</div>
+  <div class="g2">
+    <div class="field"><label data-i18n="s2.cab">Nom / Cabinet</label><input type="text" data-p="s2.cab_ph" placeholder="Nom ou raison sociale"></div>
+    <div class="field"><label data-i18n="s1.adr">Adresse</label><input type="text" data-p="s1.adr_ph" placeholder="3 rue…"></div>
+    <div class="field"><label data-i18n="s1.tel2">Tél. portable</label><input type="tel" placeholder="+33 6 00 00 00 00"></div>
+    <div class="field"><label data-i18n="s1.mail">E-mail</label><input type="email" data-p="s2.mail_ph" placeholder="architecte@exemple.fr"></div>
+  </div>
+</div>
+
+<!-- ══ 3 · CARACTÉRISTIQUES ══ -->
+<div class="sec">
+  <div class="sec-hd"><div class="sec-num">3</div><h2 data-i18n="s3.t">Caractéristiques du projet</h2></div>
+
+  <!-- Nature -->
+  <div class="sub first" data-i18n="s3.nat">Nature du projet</div>
+  <div class="choices" id="cNat">
+    <label class="chip" onclick="R(this,'cNat')"><input type="radio" name="nat" value="renov"><span data-i18n="s3.renov">Rénovation</span></label>
+    <label class="chip" onclick="R(this,'cNat')"><input type="radio" name="nat" value="neuf"><span data-i18n="s3.neuf">Construction neuve</span></label>
+  </div>
+
+  <hr>
+
+  <!-- Habitation -->
+  <div class="sub" data-i18n="s3.hab">Habitation</div>
+  <div class="g2">
+    <div class="field"><label data-i18n="s3.annee">Année de construction</label><input type="number" placeholder="2005" min="1900" max="2030"></div>
+    <div class="field"><label data-i18n="s3.surf_ch">Surface chauffée</label><div class="unit-wrap"><input type="number" placeholder="0" min="0"><span class="unit">m²</span></div></div>
+  </div>
+
+  <!-- Isolation -->
+  <div class="sub" data-i18n="s3.iso">Isolation thermique</div>
+  <div class="choices" id="cIso">
+    <label class="chip" onclick="R(this,'cIso')"><input type="radio" name="iso" value="rt2012">RT 2012</label>
+    <label class="chip" onclick="R(this,'cIso')"><input type="radio" name="iso" value="rt2020">RT 2020</label>
+    <label class="chip" onclick="R(this,'cIso');reveal('rIso',this)"><input type="radio" name="iso" value="autre"><span data-i18n="A">Autre</span></label>
+  </div>
+  <div class="reveal" id="rIso">
+    <span class="reveal-lbl" data-i18n="Prec">Préciser :</span>
+    <input type="text" placeholder="Préciser…">
+  </div>
+
+  <!-- Énergie principale -->
+  <div class="sub" data-i18n="s3.energ">Source d'énergie principale actuelle</div>
+  <div class="choices" id="cEnerg">
+    <label class="chip" onclick="R(this,'cEnerg')"><input type="radio" name="energ" value="elec"><span data-i18n="s3.elec">Électricité</span></label>
+    <label class="chip" onclick="R(this,'cEnerg')"><input type="radio" name="energ" value="fioul"><span data-i18n="s3.fioul">Fioul</span></label>
+    <label class="chip" onclick="R(this,'cEnerg')"><input type="radio" name="energ" value="gaz"><span data-i18n="s3.gaz">Gaz</span></label>
+    <label class="chip" onclick="R(this,'cEnerg')"><input type="radio" name="energ" value="geo"><span data-i18n="s3.geo">Géothermie</span></label>
+    <label class="chip" onclick="R(this,'cEnerg');reveal('rEnerg',this)"><input type="radio" name="energ" value="autre"><span data-i18n="A">Autre</span></label>
+  </div>
+  <div class="reveal" id="rEnerg">
+    <span class="reveal-lbl" data-i18n="Prec">Préciser :</span>
+    <input type="text" placeholder="Préciser…">
+  </div>
+
+  <!-- Type de chauffage -->
+  <div class="sub" data-i18n="s3.chauf">Type de chauffage / Climatisation</div>
+  <div class="choices" id="cChauf">
+    <label class="chip" onclick="C(this)"><input type="checkbox" name="chauf" value="plancher"><span data-i18n="s3.planch">Plancher chauffant</span></label>
+    <label class="chip" onclick="C(this)"><input type="checkbox" name="chauf" value="rad"><span data-i18n="s3.rad">Radiateur</span></label>
+    <label class="chip" onclick="C(this)"><input type="checkbox" name="chauf" value="vmc"><span data-i18n="s3.vmc">Ventilo-convecteur</span></label>
+    <label class="chip" onclick="C(this)"><input type="checkbox" name="chauf" value="gain"><span data-i18n="s3.gain">Gainable</span></label>
+    <label class="chip" onclick="C(this);revealCb('chauf','autre','rChauf')"><input type="checkbox" name="chauf" value="autre"><span data-i18n="A">Autre</span></label>
+  </div>
+  <div class="reveal" id="rChauf">
+    <span class="reveal-lbl" data-i18n="Prec">Préciser :</span>
+    <textarea placeholder="Préciser…"></textarea>
+  </div>
+
+  <!-- Climatisation -->
+  <div class="sub" data-i18n="s3.clim">Climatisation de l'habitation</div>
+  <div class="choices" id="cClim">
+    <label class="chip" onclick="R(this,'cClim')"><input type="radio" name="clim" value="aucune"><span data-i18n="s3.cl_auc">Aucune</span></label>
+    <label class="chip" onclick="R(this,'cClim')"><input type="radio" name="clim" value="partielle"><span data-i18n="s3.cl_part">Partielle</span></label>
+    <label class="chip" onclick="R(this,'cClim')"><input type="radio" name="clim" value="totale"><span data-i18n="s3.cl_tot">Totale</span></label>
+    <label class="chip" onclick="R(this,'cClim')"><input type="radio" name="clim" value="projet"><span data-i18n="s3.cl_proj">Projet à définir</span></label>
+  </div>
+  <div class="g2" style="margin-top:.75rem">
+    <div class="field"><label data-i18n="s3.surf_cl">Surface climatisée</label><div class="unit-wrap"><input type="number" placeholder="0" min="0"><span class="unit">m²</span></div></div>
+    <div class="field"><label data-i18n="s3.vol_cl">Volume climatisé</label><div class="unit-wrap"><input type="number" placeholder="0" min="0"><span class="unit">m³</span></div></div>
+  </div>
+
+  <hr>
+
+  <!-- Bassin -->
+  <div class="sub" data-i18n="s3.loc">Localisation du bassin</div>
+  <div class="choices" id="cLoc">
+    <label class="chip" onclick="R(this,'cLoc')"><input type="radio" name="loc" value="int"><span data-i18n="s3.int">Intérieur</span></label>
+    <label class="chip" onclick="R(this,'cLoc')"><input type="radio" name="loc" value="ext"><span data-i18n="s3.ext">Extérieur</span></label>
+  </div>
+
+  <div class="sub" data-i18n="s3.dim">Dimensions du bassin</div>
+  <div class="g3">
+    <div class="field"><label data-i18n="s3.long">Longueur</label><div class="unit-wrap"><input type="number" placeholder="0" min="0" step=".1"><span class="unit">m</span></div></div>
+    <div class="field"><label data-i18n="s3.larg">Largeur</label><div class="unit-wrap"><input type="number" placeholder="0" min="0" step=".1"><span class="unit">m</span></div></div>
+    <div class="field"><label data-i18n="s3.prof">Profondeur</label><div class="unit-wrap"><input type="number" placeholder="0" min="0" step=".1"><span class="unit">m</span></div></div>
+  </div>
+  <div class="field" style="max-width:260px;margin-bottom:.8rem">
+    <label data-i18n="s3.deb">Si débordement — volume</label>
+    <div class="unit-wrap"><input type="number" placeholder="—" min="0" step=".1"><span class="unit">m³</span></div>
+  </div>
+
+  <div class="sub" data-i18n="s3.plan">Plan joint</div>
+  <div class="choices" id="cPlan">
+    <label class="chip" onclick="R(this,'cPlan')"><input type="radio" name="plan" value="oui"><span data-i18n="Y">Oui</span></label>
+    <label class="chip" onclick="R(this,'cPlan')"><input type="radio" name="plan" value="non"><span data-i18n="N">Non</span></label>
+  </div>
+
+  <hr>
+
+  <!-- Canalisations -->
+  <div class="sub" data-i18n="s3.cana">Diamètre des canalisations</div>
+  <div class="choices" id="cCana">
+    <label class="chip" onclick="R(this,'cCana')"><input type="radio" name="cana" value="50">50 mm</label>
+    <label class="chip" onclick="R(this,'cCana')"><input type="radio" name="cana" value="63">63 mm</label>
+    <label class="chip" onclick="R(this,'cCana');reveal('rCana',this)"><input type="radio" name="cana" value="autre"><span data-i18n="A">Autre</span></label>
+  </div>
+  <div class="reveal" id="rCana">
+    <span class="reveal-lbl" data-i18n="Prec">Préciser :</span>
+    <input type="text" data-p="s3.cana_ph" placeholder="Diamètre en mm…">
+  </div>
+
+  <hr>
+
+  <!-- Chauffage piscine -->
+  <div class="sub" data-i18n="s3.chp">Dispositif de chauffage (piscine)</div>
+  <div class="choices" id="cChP">
+    <label class="chip" onclick="C(this)"><input type="checkbox" name="chp" value="pac"><span data-i18n="s3.pac">Pompe à chaleur</span></label>
+    <label class="chip" onclick="C(this);revealCb('chp','autre','rChP')"><input type="checkbox" name="chp" value="autre"><span data-i18n="A">Autre</span></label>
+    <label class="chip" onclick="C(this)"><input type="checkbox" name="chp" value="sans"><span data-i18n="s3.sans">Sans chauffage</span></label>
+  </div>
+  <div class="reveal" id="rChP">
+    <span class="reveal-lbl" data-i18n="Prec">Préciser :</span>
+    <textarea placeholder="Préciser…"></textarea>
+  </div>
+
+  <hr>
+
+  <!-- Couverture -->
+  <div class="sub" data-i18n="s3.couv">Dispositif de couverture de la piscine</div>
+  <div class="choices" id="cCouv">
+    <label class="chip" onclick="C(this)"><input type="checkbox" name="couv" value="int"><span data-i18n="s3.int">Intérieur</span></label>
+    <label class="chip" onclick="C(this)"><input type="checkbox" name="couv" value="abri"><span data-i18n="s3.abri">Sous abris</span></label>
+    <label class="chip" onclick="C(this)"><input type="checkbox" name="couv" value="volet"><span data-i18n="s3.volet">Volet</span></label>
+    <label class="chip" onclick="C(this)"><input type="checkbox" name="couv" value="barres"><span data-i18n="s3.barres">Couverture à barres</span></label>
+    <label class="chip" onclick="C(this);revealCb('couv','autre','rCouv')"><input type="checkbox" name="couv" value="autre"><span data-i18n="A">Autre</span></label>
+  </div>
+  <div class="reveal" id="rCouv">
+    <span class="reveal-lbl" data-i18n="Prec">Préciser :</span>
+    <textarea placeholder="Préciser…"></textarea>
+  </div>
+
+  <!-- Exposition soleil -->
+  <div class="sub" data-i18n="s3.expo">Exposition de la piscine au soleil l'hiver</div>
+  <div class="choices" id="cExpo">
+    <label class="chip" onclick="R(this,'cExpo')"><input type="radio" name="expo" value="bonne"><span data-i18n="s3.ex_bon">Bonne</span></label>
+    <label class="chip" onclick="R(this,'cExpo')"><input type="radio" name="expo" value="moy"><span data-i18n="s3.ex_moy">Moyenne</span></label>
+    <label class="chip" onclick="R(this,'cExpo')"><input type="radio" name="expo" value="faible"><span data-i18n="s3.ex_fai">Faible</span></label>
+    <label class="chip" onclick="R(this,'cExpo')"><input type="radio" name="expo" value="nsp"><span data-i18n="s3.ex_nsp">Ne sais pas</span></label>
+  </div>
+</div>
+
+<!-- ══ 4 · LOCAL HAB ══ -->
+<div class="sec">
+  <div class="sec-hd"><div class="sec-num">4</div><h2 data-i18n="s4.t">Local technique — Habitation</h2></div>
+
+  <div class="sub first" data-i18n="s4.porte">Porte d'accès &amp; dimensions</div>
+  <div class="g4">
+    <div class="field"><label data-i18n="s4.hp">Hauteur porte</label><div class="unit-wrap"><input type="number" placeholder="0" min="0"><span class="unit">cm</span></div></div>
+    <div class="field"><label data-i18n="s4.lp">Largeur porte</label><div class="unit-wrap"><input type="number" placeholder="0" min="0"><span class="unit">cm</span></div></div>
+    <div class="field"><label data-i18n="s4.surf">Surface dispo.</label><div class="unit-wrap"><input type="number" placeholder="0" min="0" step=".1"><span class="unit">m²</span></div></div>
+    <div class="field"><label data-i18n="s4.hpl">Haut. plafond</label><div class="unit-wrap"><input type="number" placeholder="0" min="0" step=".01"><span class="unit">m</span></div></div>
+  </div>
+
+  <div class="sub" data-i18n="s4.dist">Distance local hab. / local technique piscine</div>
+  <div class="field" style="max-width:220px;margin-bottom:.8rem">
+    <label data-i18n="s4.dist_l">Distance</label>
+    <div class="unit-wrap"><input type="number" placeholder="0" min="0" step=".5"><span class="unit">m</span></div>
+  </div>
+
+  <hr>
+
+  <div class="sub" data-i18n="s4.elec">Alimentation électrique</div>
+  <div class="frow">
+    <div>
+      <div style="font-size:11px;color:var(--ink-3);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.04em" data-i18n="s4.tens">Tension</div>
+      <div class="choices" id="cTens">
+        <label class="chip" onclick="R(this,'cTens')"><input type="radio" name="tens" value="230">230 V</label>
+        <label class="chip" onclick="R(this,'cTens')"><input type="radio" name="tens" value="400">400 V</label>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--ink-3);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.04em" data-i18n="s4.freq">Fréquence</div>
+      <div class="choices" id="cFreq">
+        <label class="chip" onclick="R(this,'cFreq')"><input type="radio" name="freq" value="50">50 Hz</label>
+        <label class="chip" onclick="R(this,'cFreq')"><input type="radio" name="freq" value="60">60 Hz</label>
+      </div>
     </div>
   </div>
 
-  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <hr>
 
-  <form class="form-body" id="mainForm" onsubmit="return false;">
-
-    <!-- 1. Coordonnées -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-number">1</div>
-        <h2 data-i18n="s1.title">Coordonnées du client</h2>
-      </div>
-
-      <div class="fg c1">
-        <div class="field"><label data-i18n="s1.societe">Société</label><input type="text" data-i18n-ph="s1.societe_ph" placeholder="Raison sociale"></div>
-      </div>
-      <div class="fg c1">
-        <div class="field"><label data-i18n="s1.adresse">Adresse</label><input type="text" data-i18n-ph="s1.adresse_ph" placeholder="3 rue…"></div>
-      </div>
-      <div class="fg">
-        <div class="field"><label data-i18n="s1.interlocuteur">Interlocuteur</label><input type="text" data-i18n-ph="s1.interlocuteur_ph" placeholder="Nom, prénom"></div>
-        <div class="field"><label data-i18n="s1.email">E-mail</label><input type="email" data-i18n-ph="s1.email_ph" placeholder="adresse@exemple.fr"></div>
-      </div>
-      <div class="fg">
-        <div class="field"><label data-i18n="s1.tel_bureau">Tél. bureau</label><input type="tel" placeholder="+33 1 00 00 00 00"></div>
-        <div class="field"><label data-i18n="s1.tel_portable">Tél. portable</label><input type="tel" placeholder="+33 6 00 00 00 00"></div>
-      </div>
-
-      <div class="sublabel" data-i18n="s1.client_cf">Client CF group</div>
-      <div class="choice-group" id="cgClient">
-        <label class="choice-item" onclick="selectRadio(this,'cgClient')"><input type="radio" name="clientCF" value="oui"> <span data-i18n="yes">Oui</span></label>
-        <label class="choice-item" onclick="selectRadio(this,'cgClient')"><input type="radio" name="clientCF" value="non"> <span data-i18n="no">Non</span></label>
+  <div class="sub" data-i18n="s4.co">Connectivité</div>
+  <div class="frow">
+    <div>
+      <div style="font-size:11px;color:var(--ink-3);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.04em" data-i18n="s4.gsm">Accès GSM</div>
+      <div class="choices" id="cGH">
+        <label class="chip" onclick="R(this,'cGH')"><input type="radio" name="gsmh" value="oui"><span data-i18n="Y">Oui</span></label>
+        <label class="chip" onclick="R(this,'cGH')"><input type="radio" name="gsmh" value="non"><span data-i18n="N">Non</span></label>
       </div>
     </div>
-
-    <!-- 2. Adresse projet -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-number">2</div>
-        <h2 data-i18n="s2.title">Adresse du projet &amp; Maître d'œuvre</h2>
-      </div>
-
-      <div class="fg c1">
-        <div class="field"><label data-i18n="s2.adresse_projet">Adresse du projet</label><input type="text" data-i18n-ph="s1.adresse_ph" placeholder="3 rue…"></div>
-      </div>
-
-      <div class="sublabel" data-i18n="s2.archi">Architecte / Maître d'œuvre</div>
-      <div class="fg">
-        <div class="field"><label data-i18n="s2.nom_cabinet">Nom / Cabinet</label><input type="text" data-i18n-ph="s2.nom_cabinet_ph" placeholder="Nom ou raison sociale"></div>
-        <div class="field"><label data-i18n="s1.adresse">Adresse</label><input type="text" data-i18n-ph="s1.adresse_ph" placeholder="3 rue…"></div>
-      </div>
-      <div class="fg">
-        <div class="field"><label data-i18n="s1.tel_portable">Tél. portable</label><input type="tel" placeholder="+33 6 00 00 00 00"></div>
-        <div class="field"><label data-i18n="s1.email">E-mail</label><input type="email" data-i18n-ph="s2.email_archi_ph" placeholder="architecte@exemple.fr"></div>
+    <div>
+      <div style="font-size:11px;color:var(--ink-3);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.04em" data-i18n="s4.eth">Accès Ethernet</div>
+      <div class="choices" id="cEH">
+        <label class="chip" onclick="R(this,'cEH')"><input type="radio" name="ethh" value="oui"><span data-i18n="Y">Oui</span></label>
+        <label class="chip" onclick="R(this,'cEH')"><input type="radio" name="ethh" value="non"><span data-i18n="N">Non</span></label>
       </div>
     </div>
+  </div>
 
-    <!-- 3. Caractéristiques -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-number">3</div>
-        <h2 data-i18n="s3.title">Caractéristiques du projet</h2>
-      </div>
+  <div class="sub" data-i18n="s4.eau">Point d'eau</div>
+  <div class="choices" id="cEauH">
+    <label class="chip" onclick="R(this,'cEauH')"><input type="radio" name="eauh" value="oui"><span data-i18n="Y">Oui</span></label>
+    <label class="chip" onclick="R(this,'cEauH')"><input type="radio" name="eauh" value="non"><span data-i18n="N">Non</span></label>
+  </div>
+</div>
 
-      <div class="sublabel" data-i18n="s3.nature">Nature du projet</div>
-      <div class="choice-group" id="natureProjet">
-        <label class="choice-item" onclick="selectRadio(this,'natureProjet')"><input type="radio" name="nature" value="renovation"> <span data-i18n="s3.renovation">Rénovation</span></label>
-        <label class="choice-item" onclick="selectRadio(this,'natureProjet')"><input type="radio" name="nature" value="construction"> <span data-i18n="s3.construction">Construction neuve</span></label>
-      </div>
+<!-- ══ 5 · LOCAL PISCINE ══ -->
+<div class="sec">
+  <div class="sec-hd"><div class="sec-num">5</div><h2 data-i18n="s5.t">Local technique — Piscine</h2></div>
 
-      <div class="divider"></div>
+  <div class="sub first" data-i18n="s4.porte">Porte d'accès &amp; dimensions</div>
+  <div class="g4">
+    <div class="field"><label data-i18n="s4.hp">Hauteur porte</label><div class="unit-wrap"><input type="number" placeholder="0" min="0"><span class="unit">cm</span></div></div>
+    <div class="field"><label data-i18n="s4.lp">Largeur porte</label><div class="unit-wrap"><input type="number" placeholder="0" min="0"><span class="unit">cm</span></div></div>
+    <div class="field"><label data-i18n="s4.surf">Surface dispo.</label><div class="unit-wrap"><input type="number" placeholder="0" min="0" step=".1"><span class="unit">m²</span></div></div>
+    <div class="field"><label data-i18n="s4.hpl">Haut. plafond</label><div class="unit-wrap"><input type="number" placeholder="0" min="0" step=".01"><span class="unit">m</span></div></div>
+  </div>
+  <div class="field" style="max-width:220px;margin-bottom:.8rem">
+    <label data-i18n="s5.alt">Altitude local / piscine</label>
+    <div class="unit-wrap"><input type="number" placeholder="0" step=".1"><span class="unit">m</span></div>
+  </div>
 
-      <div class="sublabel" data-i18n="s3.habitation">Habitation</div>
-      <div class="g2">
-        <div class="field"><label data-i18n="s3.annee">Année de construction</label><input type="number" placeholder="2005" min="1900" max="2030"></div>
-        <div class="field"><label data-i18n="s3.surface_chauffee">Surface chauffée</label><div class="fwu"><input type="number" placeholder="0" min="0"><span class="unit">m²</span></div></div>
-      </div>
+  <hr>
 
-      <div class="sublabel" data-i18n="s3.isolation">Isolation thermique</div>
-      <div class="choice-group" id="isolation">
-        <label class="choice-item" onclick="selectRadio(this,'isolation')"><input type="radio" name="isolation" value="rt2012"> RT 2012</label>
-        <label class="choice-item" onclick="selectRadio(this,'isolation')"><input type="radio" name="isolation" value="rt2020"> RT 2020</label>
-        <label class="choice-item" onclick="selectRadio(this,'isolation')"><input type="radio" name="isolation" value="autre"> <span data-i18n="other">Autre</span></label>
-      </div>
-
-      <div class="sublabel" data-i18n="s3.chauffage_hab">Type de chauffage / Climatisation</div>
-      <div class="choice-group" id="chauffageHab">
-        <label class="choice-item" onclick="selectCheckbox(this)"><input type="checkbox" name="chauffageHab" value="plancher"> <span data-i18n="s3.plancher">Plancher chauffant</span></label>
-        <label class="choice-item" onclick="selectCheckbox(this)"><input type="checkbox" name="chauffageHab" value="radiateur"> <span data-i18n="s3.radiateur">Radiateur</span></label>
-        <label class="choice-item" onclick="selectCheckbox(this)"><input type="checkbox" name="chauffageHab" value="ventiloconv"> <span data-i18n="s3.ventiloconv">Ventilo-convecteur</span></label>
-        <label class="choice-item" onclick="selectCheckbox(this)"><input type="checkbox" name="chauffageHab" value="gainable"> <span data-i18n="s3.gainable">Gainable</span></label>
-      </div>
-
-      <div class="sublabel" data-i18n="s3.clim_hab">Climatisation de l'habitation</div>
-      <div class="fg">
-        <div class="field"><label data-i18n="s3.surface_clim">Surface climatisée</label><div class="fwu"><input type="number" placeholder="0" min="0"><span class="unit">m²</span></div></div>
-        <div class="field"><label data-i18n="s3.volume_clim">Volume climatisé</label><div class="fwu"><input type="number" placeholder="0" min="0"><span class="unit">m³</span></div></div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="sublabel" data-i18n="s3.localisation">Localisation du bassin</div>
-      <div class="choice-group" id="localBassin">
-        <label class="choice-item" onclick="selectRadio(this,'localBassin')"><input type="radio" name="local" value="interieur"> <span data-i18n="s3.interieur">Intérieur</span></label>
-        <label class="choice-item" onclick="selectRadio(this,'localBassin')"><input type="radio" name="local" value="exterieur"> <span data-i18n="s3.exterieur">Extérieur</span></label>
-      </div>
-
-      <div class="sublabel" data-i18n="s3.dimensions">Dimensions du bassin</div>
-      <div class="g3">
-        <div class="field"><label data-i18n="s3.longueur">Longueur</label><div class="fwu"><input type="number" placeholder="0" min="0" step="0.1"><span class="unit">m</span></div></div>
-        <div class="field"><label data-i18n="s3.largeur">Largeur</label><div class="fwu"><input type="number" placeholder="0" min="0" step="0.1"><span class="unit">m</span></div></div>
-        <div class="field"><label data-i18n="s3.profondeur">Profondeur</label><div class="fwu"><input type="number" placeholder="0" min="0" step="0.1"><span class="unit">m</span></div></div>
-      </div>
-      <div class="field" style="max-width:280px;margin-top:0.5rem;">
-        <label data-i18n="s3.debordement">Si débordement — volume</label>
-        <div class="fwu"><input type="number" placeholder="—" min="0" step="0.1"><span class="unit">m³</span></div>
-      </div>
-
-      <div class="sublabel" data-i18n="s3.plan">Plan joint</div>
-      <div class="choice-group" id="planJoint">
-        <label class="choice-item" onclick="selectRadio(this,'planJoint')"><input type="radio" name="plan" value="oui"> <span data-i18n="yes">Oui</span></label>
-        <label class="choice-item" onclick="selectRadio(this,'planJoint')"><input type="radio" name="plan" value="non"> <span data-i18n="no">Non</span></label>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="sublabel" data-i18n="s3.diam_cana">Diamètre des canalisations</div>
-      <div class="choice-group" id="diametreCana">
-        <label class="choice-item" onclick="selectRadio(this,'diametreCana')"><input type="radio" name="diamCana" value="50"> 50 mm</label>
-        <label class="choice-item" onclick="selectRadio(this,'diametreCana')"><input type="radio" name="diamCana" value="63"> 63 mm</label>
-        <label class="choice-item" id="diametreCanaAutreBtn" onclick="selectRadio(this,'diametreCana');toggleAutreCana()"><input type="radio" name="diamCana" value="autre"> <span data-i18n="other">Autre</span></label>
-      </div>
-      <div class="inline-other" id="diametreCanaAutreField">
-        <span data-i18n="specify">Préciser :</span>
-        <input type="text" id="diametreCanaAutreInput" data-i18n-ph="s3.cana_ph" placeholder="Diamètre en mm…">
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="sublabel" data-i18n="s3.chauffage_pisc">Dispositif de chauffage (piscine)</div>
-      <div class="choice-group" id="chauffagePiscine">
-        <label class="choice-item" onclick="selectCheckbox(this)"><input type="checkbox" name="chauffagePiscine" value="pac"> <span data-i18n="s3.pac">Pompe à chaleur</span></label>
-        <label class="choice-item" onclick="selectCheckbox(this)"><input type="checkbox" name="chauffagePiscine" value="autre"> <span data-i18n="other">Autre</span></label>
-        <label class="choice-item" onclick="selectCheckbox(this)"><input type="checkbox" name="chauffagePiscine" value="sans"> <span data-i18n="s3.sans_chauffage">Sans chauffage</span></label>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="sublabel" data-i18n="s3.couverture">Dispositif de couverture de la piscine</div>
-      <div class="choice-group" id="couverture">
-        <label class="choice-item" onclick="selectCheckbox(this)"><input type="checkbox" name="couverture" value="interieur"> <span data-i18n="s3.couv_interieur">Intérieur</span></label>
-        <label class="choice-item" onclick="selectCheckbox(this)"><input type="checkbox" name="couverture" value="sous-abris"> <span data-i18n="s3.sous_abris">Sous abris</span></label>
-        <label class="choice-item" onclick="selectCheckbox(this)"><input type="checkbox" name="couverture" value="volet"> <span data-i18n="s3.volet">Volet</span></label>
-        <label class="choice-item" onclick="selectCheckbox(this)"><input type="checkbox" name="couverture" value="barres"> <span data-i18n="s3.barres">Couverture à barres</span></label>
-        <label class="choice-item" onclick="selectCheckbox(this)"><input type="checkbox" name="couverture" value="autre"> <span data-i18n="other">Autre</span></label>
+  <div class="sub" data-i18n="s4.co">Connectivité</div>
+  <div class="frow">
+    <div>
+      <div style="font-size:11px;color:var(--ink-3);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.04em" data-i18n="s4.gsm">Accès GSM</div>
+      <div class="choices" id="cGP">
+        <label class="chip" onclick="R(this,'cGP')"><input type="radio" name="gsmp" value="oui"><span data-i18n="Y">Oui</span></label>
+        <label class="chip" onclick="R(this,'cGP')"><input type="radio" name="gsmp" value="non"><span data-i18n="N">Non</span></label>
       </div>
     </div>
-
-    <!-- 4. Local technique — Habitation -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-number">4</div>
-        <h2 data-i18n="s4.title">Local technique — Habitation</h2>
-      </div>
-
-      <div class="sublabel" data-i18n="s4.porte_dim">Porte d'accès &amp; dimensions</div>
-      <div class="g2">
-        <div class="field"><label data-i18n="s4.haut_porte">Hauteur de la porte</label><div class="fwu"><input type="number" placeholder="0" min="0"><span class="unit">cm</span></div></div>
-        <div class="field"><label data-i18n="s4.larg_porte">Largeur de la porte</label><div class="fwu"><input type="number" placeholder="0" min="0"><span class="unit">cm</span></div></div>
-        <div class="field"><label data-i18n="s4.surface">Surface disponible</label><div class="fwu"><input type="number" placeholder="0" min="0" step="0.1"><span class="unit">m²</span></div></div>
-        <div class="field"><label data-i18n="s4.haut_plafond">Hauteur sous plafond</label><div class="fwu"><input type="number" placeholder="0" min="0" step="0.01"><span class="unit">m</span></div></div>
-      </div>
-
-      <div class="sublabel" data-i18n="s4.distance_hab">Distance local hab. / local technique piscine</div>
-      <div class="field" style="max-width:280px;">
-        <label data-i18n="s4.distance_label">Distance</label>
-        <div class="fwu"><input type="number" placeholder="0" min="0" step="0.5"><span class="unit">m</span></div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="sublabel" data-i18n="s4.alim_elec">Alimentation électrique</div>
-      <div class="flex-row">
-        <div>
-          <span class="choice-label" data-i18n="s4.tension">Tension</span>
-          <div class="choice-group" id="tension">
-            <label class="choice-item" onclick="selectRadio(this,'tension')"><input type="radio" name="tension" value="230"> 230 V</label>
-            <label class="choice-item" onclick="selectRadio(this,'tension')"><input type="radio" name="tension" value="400"> 400 V</label>
-          </div>
-        </div>
-        <div>
-          <span class="choice-label" data-i18n="s4.frequence">Fréquence</span>
-          <div class="choice-group" id="frequence">
-            <label class="choice-item" onclick="selectRadio(this,'frequence')"><input type="radio" name="freq" value="50"> 50 Hz</label>
-            <label class="choice-item" onclick="selectRadio(this,'frequence')"><input type="radio" name="freq" value="60"> 60 Hz</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="sublabel" data-i18n="s4.connectivite">Connectivité</div>
-      <div class="flex-row">
-        <div>
-          <span class="choice-label" data-i18n="s4.gsm">Accès GSM dans le local</span>
-          <div class="choice-group" id="gsmHab">
-            <label class="choice-item" onclick="selectRadio(this,'gsmHab')"><input type="radio" name="gsmHab" value="oui"> <span data-i18n="yes">Oui</span></label>
-            <label class="choice-item" onclick="selectRadio(this,'gsmHab')"><input type="radio" name="gsmHab" value="non"> <span data-i18n="no">Non</span></label>
-          </div>
-        </div>
-        <div>
-          <span class="choice-label" data-i18n="s4.ethernet">Accès Ethernet dans le local</span>
-          <div class="choice-group" id="ethHab">
-            <label class="choice-item" onclick="selectRadio(this,'ethHab')"><input type="radio" name="ethHab" value="oui"> <span data-i18n="yes">Oui</span></label>
-            <label class="choice-item" onclick="selectRadio(this,'ethHab')"><input type="radio" name="ethHab" value="non"> <span data-i18n="no">Non</span></label>
-          </div>
-        </div>
-      </div>
-
-      <div class="sublabel" data-i18n="s4.point_eau">Point d'eau</div>
-      <div class="choice-group" id="pointEauHab">
-        <label class="choice-item" onclick="selectRadio(this,'pointEauHab')"><input type="radio" name="peauHab" value="oui"> <span data-i18n="yes">Oui</span></label>
-        <label class="choice-item" onclick="selectRadio(this,'pointEauHab')"><input type="radio" name="peauHab" value="non"> <span data-i18n="no">Non</span></label>
+    <div>
+      <div style="font-size:11px;color:var(--ink-3);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.04em" data-i18n="s4.eth">Accès Ethernet</div>
+      <div class="choices" id="cEP">
+        <label class="chip" onclick="R(this,'cEP')"><input type="radio" name="ethp" value="oui"><span data-i18n="Y">Oui</span></label>
+        <label class="chip" onclick="R(this,'cEP')"><input type="radio" name="ethp" value="non"><span data-i18n="N">Non</span></label>
       </div>
     </div>
+  </div>
 
-    <!-- 5. Local technique — Piscine -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-number">5</div>
-        <h2 data-i18n="s5.title">Local technique — Piscine</h2>
-      </div>
+  <div class="sub" data-i18n="s4.eau">Point d'eau</div>
+  <div class="choices" id="cEauP">
+    <label class="chip" onclick="R(this,'cEauP')"><input type="radio" name="eaup" value="oui"><span data-i18n="Y">Oui</span></label>
+    <label class="chip" onclick="R(this,'cEauP')"><input type="radio" name="eaup" value="non"><span data-i18n="N">Non</span></label>
+  </div>
+</div>
 
-      <div class="sublabel" data-i18n="s4.porte_dim">Porte d'accès &amp; dimensions</div>
-      <div class="g2">
-        <div class="field"><label data-i18n="s4.haut_porte">Hauteur de la porte</label><div class="fwu"><input type="number" placeholder="0" min="0"><span class="unit">cm</span></div></div>
-        <div class="field"><label data-i18n="s4.larg_porte">Largeur de la porte</label><div class="fwu"><input type="number" placeholder="0" min="0"><span class="unit">cm</span></div></div>
-        <div class="field"><label data-i18n="s4.surface">Surface disponible</label><div class="fwu"><input type="number" placeholder="0" min="0" step="0.1"><span class="unit">m²</span></div></div>
-        <div class="field"><label data-i18n="s4.haut_plafond">Hauteur sous plafond</label><div class="fwu"><input type="number" placeholder="0" min="0" step="0.01"><span class="unit">m</span></div></div>
-        <div class="field"><label data-i18n="s5.altitude">Altitude local / piscine</label><div class="fwu"><input type="number" placeholder="0" step="0.1"><span class="unit">m</span></div></div>
-      </div>
+<!-- ══ 6 · REMARQUES ══ -->
+<div class="sec">
+  <div class="sec-hd"><div class="sec-num">6</div><h2 data-i18n="s6.t">Remarques &amp; observations</h2></div>
+  <div class="field">
+    <label data-i18n="s6.lbl">Observations complémentaires</label>
+    <textarea rows="5" data-p="s6.ph" placeholder="Informations complémentaires, contraintes spécifiques, accès chantier…"></textarea>
+  </div>
+</div>
 
-      <div class="divider"></div>
+<!-- FOOTER -->
+<div class="foot">
+  <div class="foot-info">
+    <p data-i18n="f1">AQUALUX SAS — ZA de la Massane, 287 route de la Massane, 13210 Saint-Rémy-de-Provence, France</p>
+    <p data-i18n="f2">email : bluehorizon@cf.group</p>
+    <p data-i18n="f3">RCS 390 039 949 Tarascon — SAS capital 1 500 000 € — N° TVA FR32 390 039 949</p>
+    <p data-i18n="f4">tél. : +33 (0) 9 70 72 5000</p>
+  </div>
+  <button type="button" class="btn-print" onclick="window.print()" data-i18n="print">Télécharger / Imprimer</button>
+</div>
 
-      <div class="sublabel" data-i18n="s4.connectivite">Connectivité</div>
-      <div class="flex-row">
-        <div>
-          <span class="choice-label" data-i18n="s4.gsm">Accès GSM dans le local</span>
-          <div class="choice-group" id="gsmPisc">
-            <label class="choice-item" onclick="selectRadio(this,'gsmPisc')"><input type="radio" name="gsmPisc" value="oui"> <span data-i18n="yes">Oui</span></label>
-            <label class="choice-item" onclick="selectRadio(this,'gsmPisc')"><input type="radio" name="gsmPisc" value="non"> <span data-i18n="no">Non</span></label>
-          </div>
-        </div>
-        <div>
-          <span class="choice-label" data-i18n="s4.ethernet">Accès Ethernet dans le local</span>
-          <div class="choice-group" id="ethPisc">
-            <label class="choice-item" onclick="selectRadio(this,'ethPisc')"><input type="radio" name="ethPisc" value="oui"> <span data-i18n="yes">Oui</span></label>
-            <label class="choice-item" onclick="selectRadio(this,'ethPisc')"><input type="radio" name="ethPisc" value="non"> <span data-i18n="no">Non</span></label>
-          </div>
-        </div>
-      </div>
-
-      <div class="sublabel" data-i18n="s4.point_eau">Point d'eau</div>
-      <div class="choice-group" id="pointEauPisc">
-        <label class="choice-item" onclick="selectRadio(this,'pointEauPisc')"><input type="radio" name="peauPisc" value="oui"> <span data-i18n="yes">Oui</span></label>
-        <label class="choice-item" onclick="selectRadio(this,'pointEauPisc')"><input type="radio" name="peauPisc" value="non"> <span data-i18n="no">Non</span></label>
-      </div>
-    </div>
-
-    <!-- 6. Remarques -->
-    <div class="section">
-      <div class="section-title">
-        <div class="section-number">6</div>
-        <h2 data-i18n="s6.title">Remarques &amp; observations</h2>
-      </div>
-      <div class="field">
-        <label data-i18n="s6.obs_label">Observations complémentaires</label>
-        <textarea rows="5" data-i18n-ph="s6.obs_ph" placeholder="Informations complémentaires, contraintes spécifiques, accès chantier…"></textarea>
-      </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-      <div class="footer-lines">
-       <div class="footer-line" data-i18n="footer.line1">AQUALUX SAS — ZA de la Massane, 287 route de la Massane, 13210 Saint-Rémy-de-Provence, France</div>
-        <div class="footer-line" data-i18n="footer.line2">email : bluehorizon@cf.group</div>
-        <div class="footer-line" data-i18n="footer.line3">RCS 390 039 949 Tarascon — SAS capital 1 500 000 € — N° TVA FR32 390 039 949</div>
-        <div class="footer-line" data-i18n="footer.line4">tél. : +33 (0) 9 70 72 5000</div>
-      </div>
-      <button class="btn btn-primary" onclick="window.print()" data-i18n="print_btn">Télécharger / Imprimer</button>
-    </div>
-
-  </form>
+</form>
 </div>
 
 <script>
-const translations = {
-  fr: {
-    "header.title": "Questionnaire de qualification projet",
-    "header.subtitle": "Analyse & cadrage technique",
-    "yes": "Oui", "no": "Non", "other": "Autre",
-    "specify": "Préciser :",
-    "print_btn": "Télécharger / Imprimer",
-    "footer.line1": "AQUALUX SAS — ZA de la Massane, 287 route de la Massane, 13210 Saint-Rémy-de-Provence, France",
-    "footer.line2": "email : bluehorizon@cf.group",
-    "footer.line3": "RCS 390 039 949 Tarascon — SAS capital 1 500 000 € — N° TVA FR32 390 039 949",
-    "footer.line4": "tél. : +33 (0) 9 70 72 5000",
-    "s1.title": "Coordonnées du client",
-    "s1.societe": "Société", "s1.societe_ph": "Raison sociale",
-    "s1.adresse": "Adresse", "s1.adresse_ph": "3 rue…",
-    "s1.interlocuteur": "Interlocuteur", "s1.interlocuteur_ph": "Nom, prénom",
-    "s1.email": "E-mail", "s1.email_ph": "adresse@exemple.fr",
-    "s1.tel_bureau": "Tél. bureau", "s1.tel_portable": "Tél. portable",
-    "s1.client_cf": "Client CF group",
-    "s2.title": "Adresse du projet & Maître d'œuvre",
-    "s2.adresse_projet": "Adresse du projet",
-    "s2.archi": "Architecte / Maître d'œuvre",
-    "s2.nom_cabinet": "Nom / Cabinet", "s2.nom_cabinet_ph": "Nom ou raison sociale",
-    "s2.email_archi_ph": "architecte@exemple.fr",
-    "s3.title": "Caractéristiques du projet",
-    "s3.nature": "Nature du projet",
-    "s3.renovation": "Rénovation", "s3.construction": "Construction neuve",
-    "s3.habitation": "Habitation",
-    "s3.annee": "Année de construction",
-    "s3.surface_chauffee": "Surface chauffée",
-    "s3.isolation": "Isolation thermique",
-    "s3.chauffage_hab": "Type de chauffage / Climatisation",
-    "s3.plancher": "Plancher chauffant", "s3.radiateur": "Radiateur",
-    "s3.ventiloconv": "Ventilo-convecteur", "s3.gainable": "Gainable",
-    "s3.clim_hab": "Climatisation de l'habitation",
-    "s3.surface_clim": "Surface climatisée", "s3.volume_clim": "Volume climatisé",
-    "s3.localisation": "Localisation du bassin",
-    "s3.interieur": "Intérieur", "s3.exterieur": "Extérieur",
-    "s3.dimensions": "Dimensions du bassin",
-    "s3.longueur": "Longueur", "s3.largeur": "Largeur", "s3.profondeur": "Profondeur",
-    "s3.debordement": "Si débordement — volume",
-    "s3.plan": "Plan joint",
-    "s3.diam_cana": "Diamètre des canalisations",
-    "s3.cana_ph": "Diamètre en mm…",
-    "s3.chauffage_pisc": "Dispositif de chauffage (piscine)",
-    "s3.pac": "Pompe à chaleur", "s3.sans_chauffage": "Sans chauffage",
-    "s3.couverture": "Dispositif de couverture de la piscine",
-    "s3.couv_interieur": "Intérieur", "s3.sous_abris": "Sous abris",
-    "s3.volet": "Volet", "s3.barres": "Couverture à barres",
-    "s4.title": "Local technique — Habitation",
-    "s4.porte_dim": "Porte d'accès & dimensions",
-    "s4.haut_porte": "Hauteur de la porte", "s4.larg_porte": "Largeur de la porte",
-    "s4.surface": "Surface disponible", "s4.haut_plafond": "Hauteur sous plafond",
-    "s4.distance_hab": "Distance local hab. / local technique piscine",
-    "s4.distance_label": "Distance",
-    "s4.alim_elec": "Alimentation électrique",
-    "s4.tension": "Tension", "s4.frequence": "Fréquence",
-    "s4.connectivite": "Connectivité",
-    "s4.gsm": "Accès GSM dans le local",
-    "s4.ethernet": "Accès Ethernet dans le local",
-    "s4.point_eau": "Point d'eau",
-    "s5.title": "Local technique — Piscine",
-    "s5.altitude": "Altitude local / piscine",
-    "s6.title": "Remarques & observations",
-    "s6.obs_label": "Observations complémentaires",
-    "s6.obs_ph": "Informations complémentaires, contraintes spécifiques, accès chantier…"
+const T={
+  fr:{
+    "h.title":"Questionnaire de qualification projet","h.sub":"Analyse & cadrage technique",
+    "Y":"Oui","N":"Non","A":"Autre","Prec":"Préciser :",
+    "print":"Télécharger / Imprimer",
+    "s1.t":"Coordonnées du client","s1.soc":"Société","s1.soc_ph":"Raison sociale",
+    "s1.adr":"Adresse","s1.adr_ph":"3 rue…","s1.ref":"Interlocuteur","s1.ref_ph":"Nom, prénom",
+    "s1.mail":"E-mail","s1.mail_ph":"adresse@exemple.fr",
+    "s1.tel1":"Tél. bureau","s1.tel2":"Tél. portable","s1.cf":"Client CF group",
+    "s2.t":"Adresse du projet & Maître d'œuvre","s2.adr":"Adresse du projet",
+    "s2.archi":"Architecte / Maître d'œuvre","s2.cab":"Nom / Cabinet","s2.cab_ph":"Nom ou raison sociale",
+    "s2.mail_ph":"architecte@exemple.fr",
+    "s3.t":"Caractéristiques du projet","s3.nat":"Nature du projet",
+    "s3.renov":"Rénovation","s3.neuf":"Construction neuve",
+    "s3.hab":"Habitation","s3.annee":"Année de construction","s3.surf_ch":"Surface chauffée",
+    "s3.iso":"Isolation thermique",
+    "s3.energ":"Source d'énergie principale actuelle",
+    "s3.elec":"Électricité","s3.fioul":"Fioul","s3.gaz":"Gaz","s3.geo":"Géothermie",
+    "s3.chauf":"Type de chauffage / Climatisation",
+    "s3.planch":"Plancher chauffant","s3.rad":"Radiateur","s3.vmc":"Ventilo-convecteur","s3.gain":"Gainable",
+    "s3.clim":"Climatisation de l'habitation",
+    "s3.cl_auc":"Aucune","s3.cl_part":"Partielle","s3.cl_tot":"Totale","s3.cl_proj":"Projet à définir",
+    "s3.surf_cl":"Surface climatisée","s3.vol_cl":"Volume climatisé",
+    "s3.loc":"Localisation du bassin","s3.int":"Intérieur","s3.ext":"Extérieur",
+    "s3.dim":"Dimensions du bassin",
+    "s3.long":"Longueur","s3.larg":"Largeur","s3.prof":"Profondeur",
+    "s3.deb":"Si débordement — volume","s3.plan":"Plan joint",
+    "s3.cana":"Diamètre des canalisations","s3.cana_ph":"Diamètre en mm…",
+    "s3.chp":"Dispositif de chauffage (piscine)","s3.pac":"Pompe à chaleur","s3.sans":"Sans chauffage",
+    "s3.couv":"Dispositif de couverture de la piscine",
+    "s3.abri":"Sous abris","s3.volet":"Volet","s3.barres":"Couverture à barres",
+    "s3.expo":"Exposition de la piscine au soleil l'hiver",
+    "s3.ex_bon":"Bonne","s3.ex_moy":"Moyenne","s3.ex_fai":"Faible","s3.ex_nsp":"Ne sais pas",
+    "s4.t":"Local technique — Habitation","s4.porte":"Porte d'accès & dimensions",
+    "s4.hp":"Hauteur porte","s4.lp":"Largeur porte","s4.surf":"Surface dispo.","s4.hpl":"Haut. plafond",
+    "s4.dist":"Distance local hab. / local technique piscine","s4.dist_l":"Distance",
+    "s4.elec":"Alimentation électrique","s4.tens":"Tension","s4.freq":"Fréquence",
+    "s4.co":"Connectivité","s4.gsm":"Accès GSM","s4.eth":"Accès Ethernet","s4.eau":"Point d'eau",
+    "s5.t":"Local technique — Piscine","s5.alt":"Altitude local / piscine",
+    "s6.t":"Remarques & observations","s6.lbl":"Observations complémentaires",
+    "s6.ph":"Informations complémentaires, contraintes spécifiques, accès chantier…",
+    "f1":"AQUALUX SAS — ZA de la Massane, 287 route de la Massane, 13210 Saint-Rémy-de-Provence, France",
+    "f2":"email : bluehorizon@cf.group",
+    "f3":"RCS 390 039 949 Tarascon — SAS capital 1 500 000 € — N° TVA FR32 390 039 949",
+    "f4":"tél. : +33 (0) 9 70 72 5000"
   },
-  en: {
-    "header.title": "Project Qualification Questionnaire",
-    "header.subtitle": "Technical analysis & scoping",
-    "yes": "Yes", "no": "No", "other": "Other",
-    "specify": "Specify:",
-    "print_btn": "Download / Print",
-    "footer.line1": "AQUALUX SAS — ZA de la Massane, 287 route de la Massane, 13210 Saint-Rémy-de-Provence, France",
-    "footer.line2": "email: bluehorizon@cf.group",
-    "footer.line3": "Company reg. 390 039 949 Tarascon — Share capital €1,500,000 — VAT no. FR32 390 039 949",
-    "footer.line4": "tel.: +33 (0) 9 70 72 5000",
-    "s1.title": "Client information",
-    "s1.societe": "Company", "s1.societe_ph": "Legal name",
-    "s1.adresse": "Address", "s1.adresse_ph": "3 Oxford Street…",
-    "s1.interlocuteur": "Contact person", "s1.interlocuteur_ph": "Last name, first name",
-    "s1.email": "E-mail", "s1.email_ph": "address@example.com",
-    "s1.tel_bureau": "Office phone", "s1.tel_portable": "Mobile phone",
-    "s1.client_cf": "CF group client",
-    "s2.title": "Project address & Project manager",
-    "s2.adresse_projet": "Project address",
-    "s2.archi": "Architect / Project manager",
-    "s2.nom_cabinet": "Name / Company", "s2.nom_cabinet_ph": "Name or legal name",
-    "s2.email_archi_ph": "architect@example.com",
-    "s3.title": "Project characteristics",
-    "s3.nature": "Project type",
-    "s3.renovation": "Renovation", "s3.construction": "New build",
-    "s3.habitation": "Building",
-    "s3.annee": "Year of construction",
-    "s3.surface_chauffee": "Heated floor area",
-    "s3.isolation": "Thermal insulation",
-    "s3.chauffage_hab": "Heating / Air conditioning type",
-    "s3.plancher": "Underfloor heating", "s3.radiateur": "Radiator",
-    "s3.ventiloconv": "Fan coil unit", "s3.gainable": "Ducted system",
-    "s3.clim_hab": "Building air conditioning",
-    "s3.surface_clim": "Cooled floor area", "s3.volume_clim": "Cooled volume",
-    "s3.localisation": "Pool location",
-    "s3.interieur": "Indoor", "s3.exterieur": "Outdoor",
-    "s3.dimensions": "Pool dimensions",
-    "s3.longueur": "Length", "s3.largeur": "Width", "s3.profondeur": "Depth",
-    "s3.debordement": "If overflow — volume",
-    "s3.plan": "Drawing attached",
-    "s3.diam_cana": "Pipe diameter",
-    "s3.cana_ph": "Diameter in mm…",
-    "s3.chauffage_pisc": "Pool heating system",
-    "s3.pac": "Heat pump", "s3.sans_chauffage": "No heating",
-    "s3.couverture": "Pool cover system",
-    "s3.couv_interieur": "Indoor", "s3.sous_abris": "Under shelter",
-    "s3.volet": "Slatted cover", "s3.barres": "Bar cover",
-    "s4.title": "Technical room — House",
-    "s4.porte_dim": "Access door & dimensions",
-    "s4.haut_porte": "Door height", "s4.larg_porte": "Door width",
-    "s4.surface": "Available floor area", "s4.haut_plafond": "Ceiling height",
-    "s4.distance_hab": "Distance house room / pool technical room",
-    "s4.distance_label": "Distance",
-    "s4.alim_elec": "Electrical supply",
-    "s4.tension": "Voltage", "s4.frequence": "Frequency",
-    "s4.connectivite": "Connectivity",
-    "s4.gsm": "GSM signal in the room",
-    "s4.ethernet": "Ethernet access in the room",
-    "s4.point_eau": "Water supply point",
-    "s5.title": "Technical room — Pool",
-    "s5.altitude": "Room elevation vs. pool",
-    "s6.title": "Remarks & observations",
-    "s6.obs_label": "Additional observations",
-    "s6.obs_ph": "Additional information, specific constraints, site access…"
+  en:{
+    "h.title":"Project Qualification Questionnaire","h.sub":"Technical analysis & scoping",
+    "Y":"Yes","N":"No","A":"Other","Prec":"Specify:",
+    "print":"Download / Print",
+    "s1.t":"Client information","s1.soc":"Company","s1.soc_ph":"Legal name",
+    "s1.adr":"Address","s1.adr_ph":"3 Oxford Street…","s1.ref":"Contact person","s1.ref_ph":"Last name, first name",
+    "s1.mail":"E-mail","s1.mail_ph":"address@example.com",
+    "s1.tel1":"Office phone","s1.tel2":"Mobile phone","s1.cf":"CF group client",
+    "s2.t":"Project address & Project manager","s2.adr":"Project address",
+    "s2.archi":"Architect / Project manager","s2.cab":"Name / Company","s2.cab_ph":"Name or legal name",
+    "s2.mail_ph":"architect@example.com",
+    "s3.t":"Project characteristics","s3.nat":"Project type",
+    "s3.renov":"Renovation","s3.neuf":"New build",
+    "s3.hab":"Building","s3.annee":"Year of construction","s3.surf_ch":"Heated floor area",
+    "s3.iso":"Thermal insulation",
+    "s3.energ":"Current main energy source",
+    "s3.elec":"Electricity","s3.fioul":"Fuel oil","s3.gaz":"Gas","s3.geo":"Geothermal",
+    "s3.chauf":"Heating / Air conditioning type",
+    "s3.planch":"Underfloor heating","s3.rad":"Radiator","s3.vmc":"Fan coil unit","s3.gain":"Ducted system",
+    "s3.clim":"Building air conditioning",
+    "s3.cl_auc":"None","s3.cl_part":"Partial","s3.cl_tot":"Full","s3.cl_proj":"Project to be defined",
+    "s3.surf_cl":"Cooled floor area","s3.vol_cl":"Cooled volume",
+    "s3.loc":"Pool location","s3.int":"Indoor","s3.ext":"Outdoor",
+    "s3.dim":"Pool dimensions",
+    "s3.long":"Length","s3.larg":"Width","s3.prof":"Depth",
+    "s3.deb":"If overflow — volume","s3.plan":"Drawing attached",
+    "s3.cana":"Pipe diameter","s3.cana_ph":"Diameter in mm…",
+    "s3.chp":"Pool heating system","s3.pac":"Heat pump","s3.sans":"No heating",
+    "s3.couv":"Pool cover system",
+    "s3.abri":"Under shelter","s3.volet":"Slatted cover","s3.barres":"Bar cover",
+    "s3.expo":"Pool sun exposure in winter",
+    "s3.ex_bon":"Good","s3.ex_moy":"Average","s3.ex_fai":"Low","s3.ex_nsp":"Don't know",
+    "s4.t":"Technical room — House","s4.porte":"Access door & dimensions",
+    "s4.hp":"Door height","s4.lp":"Door width","s4.surf":"Available area","s4.hpl":"Ceiling height",
+    "s4.dist":"Distance house room / pool technical room","s4.dist_l":"Distance",
+    "s4.elec":"Electrical supply","s4.tens":"Voltage","s4.freq":"Frequency",
+    "s4.co":"Connectivity","s4.gsm":"GSM signal","s4.eth":"Ethernet access","s4.eau":"Water supply point",
+    "s5.t":"Technical room — Pool","s5.alt":"Room elevation vs. pool",
+    "s6.t":"Remarks & observations","s6.lbl":"Additional observations",
+    "s6.ph":"Additional information, specific constraints, site access…",
+    "f1":"AQUALUX SAS — ZA de la Massane, 287 route de la Massane, 13210 Saint-Rémy-de-Provence, France",
+    "f2":"email: bluehorizon@cf.group",
+    "f3":"Company reg. 390 039 949 Tarascon — Share capital €1,500,000 — VAT no. FR32 390 039 949",
+    "f4":"tel.: +33 (0) 9 70 72 5000"
   },
-  de: {
-    "header.title": "Projektqualifizierungs-Fragebogen",
-    "header.subtitle": "Technische Analyse & Projektrahmen",
-    "yes": "Ja", "no": "Nein", "other": "Sonstige",
-    "specify": "Angeben:",
-    "print_btn": "Herunterladen / Drucken",
-    "footer.line1": "AQUALUX SAS — ZA de la Massane, 287 route de la Massane, 13210 Saint-Rémy-de-Provence, Frankreich",
-    "footer.line2": "E-Mail: bluehorizon@cf.group",
-    "footer.line3": "Handelsreg. 390 039 949 Tarascon — Stammkapital 1.500.000 € — USt-IdNr. FR32 390 039 949",
-    "footer.line4": "Tel.: +33 (0) 9 70 72 5000",
-    "s1.title": "Kundendaten",
-    "s1.societe": "Unternehmen", "s1.societe_ph": "Firmenname",
-    "s1.adresse": "Adresse", "s1.adresse_ph": "Musterstraße 3…",
-    "s1.interlocuteur": "Ansprechpartner", "s1.interlocuteur_ph": "Nachname, Vorname",
-    "s1.email": "E-Mail", "s1.email_ph": "adresse@beispiel.de",
-    "s1.tel_bureau": "Bürotelefon", "s1.tel_portable": "Mobiltelefon",
-    "s1.client_cf": "CF group Kunde",
-    "s2.title": "Projektadresse & Bauleitung",
-    "s2.adresse_projet": "Projektadresse",
-    "s2.archi": "Architekt / Bauleitung",
-    "s2.nom_cabinet": "Name / Büro", "s2.nom_cabinet_ph": "Name oder Firmenname",
-    "s2.email_archi_ph": "architekt@beispiel.de",
-    "s3.title": "Projekteigenschaften",
-    "s3.nature": "Projektart",
-    "s3.renovation": "Renovierung", "s3.construction": "Neubau",
-    "s3.habitation": "Gebäude",
-    "s3.annee": "Baujahr",
-    "s3.surface_chauffee": "Beheizte Fläche",
-    "s3.isolation": "Wärmedämmung",
-    "s3.chauffage_hab": "Heizung / Klimaanlage",
-    "s3.plancher": "Fußbodenheizung", "s3.radiateur": "Heizkörper",
-    "s3.ventiloconv": "Ventilatorkonvektor", "s3.gainable": "Kanalanlage",
-    "s3.clim_hab": "Klimatisierung des Gebäudes",
-    "s3.surface_clim": "Gekühlte Fläche", "s3.volume_clim": "Gekühltes Volumen",
-    "s3.localisation": "Lage des Beckens",
-    "s3.interieur": "Innen", "s3.exterieur": "Außen",
-    "s3.dimensions": "Beckenabmessungen",
-    "s3.longueur": "Länge", "s3.largeur": "Breite", "s3.profondeur": "Tiefe",
-    "s3.debordement": "Bei Überlauf — Volumen",
-    "s3.plan": "Plan beigefügt",
-    "s3.diam_cana": "Rohrdurchmesser",
-    "s3.cana_ph": "Durchmesser in mm…",
-    "s3.chauffage_pisc": "Schwimmbadheizung",
-    "s3.pac": "Wärmepumpe", "s3.sans_chauffage": "Ohne Heizung",
-    "s3.couverture": "Schwimmbadabdeckung",
-    "s3.couv_interieur": "Innen", "s3.sous_abris": "Unter Überdachung",
-    "s3.volet": "Lamellen-Abdeckung", "s3.barres": "Stababdeckung",
-    "s4.title": "Technikraum — Wohngebäude",
-    "s4.porte_dim": "Zugangstür & Abmessungen",
-    "s4.haut_porte": "Türhöhe", "s4.larg_porte": "Türbreite",
-    "s4.surface": "Verfügbare Fläche", "s4.haut_plafond": "Raumhöhe",
-    "s4.distance_hab": "Abstand Wohnraum / Schwimmbad-Technikraum",
-    "s4.distance_label": "Abstand",
-    "s4.alim_elec": "Stromversorgung",
-    "s4.tension": "Spannung", "s4.frequence": "Frequenz",
-    "s4.connectivite": "Konnektivität",
-    "s4.gsm": "GSM-Empfang im Raum",
-    "s4.ethernet": "Ethernet-Anschluss im Raum",
-    "s4.point_eau": "Wasseranschluss",
-    "s5.title": "Technikraum — Schwimmbad",
-    "s5.altitude": "Höhe Technikraum / Becken",
-    "s6.title": "Bemerkungen & Hinweise",
-    "s6.obs_label": "Zusätzliche Anmerkungen",
-    "s6.obs_ph": "Weitere Informationen, spezifische Einschränkungen, Bauzugang…"
+  de:{
+    "h.title":"Projektqualifizierungs-Fragebogen","h.sub":"Technische Analyse & Projektrahmen",
+    "Y":"Ja","N":"Nein","A":"Sonstige","Prec":"Angeben:",
+    "print":"Herunterladen / Drucken",
+    "s1.t":"Kundendaten","s1.soc":"Unternehmen","s1.soc_ph":"Firmenname",
+    "s1.adr":"Adresse","s1.adr_ph":"Musterstraße 3…","s1.ref":"Ansprechpartner","s1.ref_ph":"Nachname, Vorname",
+    "s1.mail":"E-Mail","s1.mail_ph":"adresse@beispiel.de",
+    "s1.tel1":"Bürotelefon","s1.tel2":"Mobiltelefon","s1.cf":"CF group Kunde",
+    "s2.t":"Projektadresse & Bauleitung","s2.adr":"Projektadresse",
+    "s2.archi":"Architekt / Bauleitung","s2.cab":"Name / Büro","s2.cab_ph":"Name oder Firmenname",
+    "s2.mail_ph":"architekt@beispiel.de",
+    "s3.t":"Projekteigenschaften","s3.nat":"Projektart",
+    "s3.renov":"Renovierung","s3.neuf":"Neubau",
+    "s3.hab":"Gebäude","s3.annee":"Baujahr","s3.surf_ch":"Beheizte Fläche",
+    "s3.iso":"Wärmedämmung",
+    "s3.energ":"Aktuelle Hauptenergiequelle",
+    "s3.elec":"Strom","s3.fioul":"Heizöl","s3.gaz":"Gas","s3.geo":"Geothermie",
+    "s3.chauf":"Heizung / Klimaanlage",
+    "s3.planch":"Fußbodenheizung","s3.rad":"Heizkörper","s3.vmc":"Ventilatorkonvektor","s3.gain":"Kanalanlage",
+    "s3.clim":"Klimatisierung des Gebäudes",
+    "s3.cl_auc":"Keine","s3.cl_part":"Teilweise","s3.cl_tot":"Vollständig","s3.cl_proj":"Projekt zu definieren",
+    "s3.surf_cl":"Gekühlte Fläche","s3.vol_cl":"Gekühltes Volumen",
+    "s3.loc":"Lage des Beckens","s3.int":"Innen","s3.ext":"Außen",
+    "s3.dim":"Beckenabmessungen",
+    "s3.long":"Länge","s3.larg":"Breite","s3.prof":"Tiefe",
+    "s3.deb":"Bei Überlauf — Volumen","s3.plan":"Plan beigefügt",
+    "s3.cana":"Rohrdurchmesser","s3.cana_ph":"Durchmesser in mm…",
+    "s3.chp":"Schwimmbadheizung","s3.pac":"Wärmepumpe","s3.sans":"Ohne Heizung",
+    "s3.couv":"Schwimmbadabdeckung",
+    "s3.abri":"Unter Überdachung","s3.volet":"Lamellen-Abdeckung","s3.barres":"Stababdeckung",
+    "s3.expo":"Sonnenexposition des Schwimmbads im Winter",
+    "s3.ex_bon":"Gut","s3.ex_moy":"Mittel","s3.ex_fai":"Gering","s3.ex_nsp":"Weiß nicht",
+    "s4.t":"Technikraum — Wohngebäude","s4.porte":"Zugangstür & Abmessungen",
+    "s4.hp":"Türhöhe","s4.lp":"Türbreite","s4.surf":"Verfügbare Fläche","s4.hpl":"Raumhöhe",
+    "s4.dist":"Abstand Wohnraum / Schwimmbad-Technikraum","s4.dist_l":"Abstand",
+    "s4.elec":"Stromversorgung","s4.tens":"Spannung","s4.freq":"Frequenz",
+    "s4.co":"Konnektivität","s4.gsm":"GSM-Empfang","s4.eth":"Ethernet-Anschluss","s4.eau":"Wasseranschluss",
+    "s5.t":"Technikraum — Schwimmbad","s5.alt":"Höhe Technikraum / Becken",
+    "s6.t":"Bemerkungen & Hinweise","s6.lbl":"Zusätzliche Anmerkungen",
+    "s6.ph":"Weitere Informationen, spezifische Einschränkungen, Bauzugang…",
+    "f1":"AQUALUX SAS — ZA de la Massane, 287 route de la Massane, 13210 Saint-Rémy-de-Provence, Frankreich",
+    "f2":"E-Mail: bluehorizon@cf.group",
+    "f3":"Handelsreg. 390 039 949 Tarascon — Stammkapital 1.500.000 € — USt-IdNr. FR32 390 039 949",
+    "f4":"Tel.: +33 (0) 9 70 72 5000"
   }
 };
 
-let currentLang = 'fr';
+let lang='fr';
 
-function setLang(lang) {
-  currentLang = lang;
-  document.getElementById('btnFR').classList.toggle('active', lang === 'fr');
-  document.getElementById('btnEN').classList.toggle('active', lang === 'en');
-  document.getElementById('btnDE').classList.toggle('active', lang === 'de');
-  document.documentElement.lang = lang;
-  const t = translations[lang];
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (t[key] !== undefined) el.innerHTML = t[key];
+function L(l){
+  lang=l;
+  ['FR','EN','DE'].forEach(x=>document.getElementById('b'+x).classList.toggle('on',x.toLowerCase()===l));
+  document.documentElement.lang=l;
+  const t=T[l];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(t[k]!==undefined)el.innerHTML=t[k];
   });
-  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-    const key = el.getAttribute('data-i18n-ph');
-    if (t[key] !== undefined) el.placeholder = t[key];
+  document.querySelectorAll('[data-p]').forEach(el=>{
+    const k=el.getAttribute('data-p');
+    if(t[k]!==undefined)el.placeholder=t[k];
   });
-  const titles = { fr: 'Questionnaire Powerbank', en: 'Project Qualification Questionnaire', de: 'Projektqualifizierungs-Fragebogen' };
-  document.title = titles[lang] || titles.fr;
+  const titles={fr:'Questionnaire Powerbank',en:'Project Qualification Questionnaire',de:'Projektqualifizierungs-Fragebogen'};
+  document.title=titles[l];
 }
 
-function selectRadio(el, groupId) {
-  const group = document.getElementById(groupId);
-  if (!group) return;
-  group.querySelectorAll('.choice-item').forEach(i => i.classList.remove('selected'));
-  el.classList.add('selected');
-  updateProgress();
+function R(el,gid){
+  document.getElementById(gid).querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  prog();
 }
 
-function selectCheckbox(el) {
-  const cb = el.querySelector('input[type="checkbox"]');
-  if (cb) el.classList.toggle('selected', cb.checked);
-  updateProgress();
+function C(el){
+  const cb=el.querySelector('input[type=checkbox]');
+  if(cb)el.classList.toggle('on',cb.checked);
+  prog();
 }
 
-function toggleAutreCana() {
-  const field = document.getElementById('diametreCanaAutreField');
-  const r = document.querySelector('input[name="diamCana"][value="autre"]');
-  if (r && r.checked) {
-    field.classList.add('visible');
-    document.getElementById('diametreCanaAutreInput').focus();
-  } else {
-    field.classList.remove('visible');
-  }
+function reveal(rid,el){
+  const r=document.getElementById(rid);
+  if(!r)return;
+  const inp=el.querySelector('input[type=radio]');
+  const open=inp&&inp.checked;
+  r.classList.toggle('open',open);
+  if(open){const f=r.querySelector('input,textarea');if(f)setTimeout(()=>f.focus(),50);}
+  else{const f=r.querySelector('input,textarea');if(f)f.value='';}
 }
 
-document.querySelectorAll('input[name="diamCana"]').forEach(radio => {
-  radio.addEventListener('change', function() {
-    if (this.value !== 'autre') {
-      document.getElementById('diametreCanaAutreField').classList.remove('visible');
-      document.getElementById('diametreCanaAutreInput').value = '';
-    }
-  });
-});
-
-function updateProgress() {
-  const radios = document.querySelectorAll('input[type="radio"]');
-  const names  = [...new Set([...radios].map(r => r.name))];
-  const answered = names.filter(n => document.querySelector('input[name="' + n + '"]:checked')).length;
-  document.getElementById('progressFill').style.width = Math.round((answered / names.length) * 100) + '%';
+function revealCb(name,val,rid){
+  const r=document.getElementById(rid);
+  if(!r)return;
+  const cb=document.querySelector('input[name='+name+'][value='+val+']');
+  const open=cb&&cb.checked;
+  r.classList.toggle('open',open);
+  if(open){const f=r.querySelector('input,textarea');if(f)setTimeout(()=>f.focus(),50);}
+  else{const f=r.querySelector('input,textarea');if(f)f.value='';}
 }
 
-document.querySelectorAll('input, textarea').forEach(el => el.addEventListener('input', updateProgress));
-updateProgress();
+function prog(){
+  const radios=document.querySelectorAll('input[type=radio]');
+  const names=[...new Set([...radios].map(r=>r.name))];
+  const done=names.filter(n=>document.querySelector('input[name='+n+']:checked')).length;
+  document.getElementById('pFill').style.width=Math.round(done/names.length*100)+'%';
+}
+
+document.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('input',prog));
+prog();
 </script>
 </body>
 </html>
